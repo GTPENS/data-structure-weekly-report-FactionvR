@@ -1,0 +1,176 @@
+/*   
+                    PRAKTIKUM 03 : DOUBLE LINKED LIST
+`
+NAMA : Rangga Raisha Syaputra
+NRP : 5223600007
+KELAS : GT11-A
+
+                            PERCOBAAN
+
+1. Implementasikan operasi dasar Double linked list : Menyisipkan sebagai simpul
+ujung(awal) dari linked list.
+2. Implementasikan operasi dasar Double linked list : Membaca atau menampilkan
+3. Implementasikan operasi dasar Double linked list : Mencari sebuah simpul tertentu. Tambahkan kondisi jika yang dicari adalah data yang paling depan.
+4. Implementasikan operasi dasar Double linked list : Menghapus simpul tertentu. Tambahkan kondisi jika yang dihapus adalah data yang paling depan atau data yang paling terakhir.
+5. Gabungkan semua operasi di atas dalam sebuah Menu Pilihan.
+*/
+
+#include <iostream>
+using namespace std;
+
+// Definisikan struktur Node untuk merepresentasikan simpul dalam linked list
+struct Node{
+    int data;       // Menyimpan data
+    Node* sebelum;  // Pointer ke simpul sebelumnya
+    Node* setelah;  // Pointer ke simpul selanjutnya
+};
+
+// Fungsi untuk menyisipkan simpul baru sebagai simpul ujung (awal) dari linked list
+void insertNode(Node*& head, Node*& tail, int data){
+    // Buat simpul baru
+    Node* n = new Node();
+    n->data = data;
+
+    // Jika linked list masih kosong
+    if(head == nullptr){
+        n->setelah = nullptr;
+        n->sebelum = nullptr;
+        head = n;
+        tail = n;
+    }
+    // Jika linked list tidak kosong
+    else{
+        n->setelah = head;
+        head->sebelum = n;
+        head = n;
+    }
+}
+
+// Fungsi untuk menampilkan isi linked list
+void tampilkan(Node* head){
+    Node* temp = head;
+    // Iterasi melalui linked list dan mencetak data setiap simpul
+    while (temp != NULL) {
+        cout << temp->data << " ";
+        temp = temp->setelah;
+    }
+    cout << endl;
+
+    // Menampilkan data head dan next-nya
+    if (head != nullptr && head->setelah != nullptr)
+        cout << "head  " << head->data << " next-nya adalah " << head->setelah->data << endl;
+}
+
+// Fungsi untuk mencari simpul dengan nilai tertentu dalam linked list
+void cari(Node* head, int data){
+    Node* temp = head;
+    int n = 1;
+    // Jika linked list kosong
+    if(head == nullptr){
+        cout << "List data anda belum dibuat" << endl;
+    }
+    // Jika linked list tidak kosong
+    else{
+        // Melakukan iterasi untuk mencari simpul dengan nilai yang dicari
+        while(temp->data != data){
+            // Jika sampai akhir linked list dan data tidak ditemukan
+            if(temp->setelah == nullptr){
+                cout << "data " << data << " tidak ditemukan" << endl;
+                break;
+            }
+            // Jika belum sampai akhir linked list, lanjutkan pencarian
+            else{
+                temp = temp->setelah;
+            }
+            n++;
+        }
+    }
+    // Jika data ditemukan, tampilkan posisi simpulnya
+    if(temp->data == data) 
+        cout << "data " << data << " terdapat pada node ke-" << n << endl;
+}
+
+// Fungsi untuk menghapus simpul dengan nilai tertentu dari linked list
+void deleteNode(Node*& head, Node*& tail, int data){
+    Node* temp = head;
+    // Melakukan iterasi untuk mencari simpul dengan nilai yang akan dihapus
+    while(temp->data != data){
+        temp = temp->setelah;
+    }
+    // Jika simpul yang akan dihapus adalah head
+    if(temp == head){
+        head = head->setelah;
+    }
+    // Jika simpul yang akan dihapus adalah tail
+    else if(temp == tail){
+        tail = tail->sebelum;
+    }
+    // Jika simpul yang akan dihapus berada di tengah-tengah
+    else{
+        temp->sebelum->setelah = temp->setelah;
+        temp->setelah->sebelum = temp->sebelum;
+    }
+    delete temp; // Hapus simpul
+}
+
+// Fungsi untuk menghapus seluruh simpul dalam linked list
+void hapus(Node*& head) {
+    // Melakukan iterasi dari head hingga mencapai nullptr, dan menghapus setiap simpul satu per satu
+    while (head != nullptr) {
+        Node* temp = head;
+        head = head->setelah;
+        delete temp;
+    }
+}
+
+int main(){
+    Node* head = nullptr;  // Pointer ke simpul pertama (head)
+    Node* tail = nullptr;  // Pointer ke simpul terakhir (tail)
+
+    int pilihan, data;
+
+    do {
+        // Menampilkan menu pilihan
+        cout << "\nSilakan pilih menu:\n";
+        cout << "1. Menyisipkan sebagai simpul ujung(awal) dari Linked List\n";
+        cout << "2. Membaca atau menampilkan\n";
+        cout << "3. Mencari sebuah simpul tertentu\n";
+        cout << "4. Menghapus simpul tertentu.\n";
+        cout << "5. Selesai\n";
+        cout << "Masukkan menu yang anda pilih: ";
+        cin >> pilihan;
+
+        // Memproses pilihan pengguna
+        switch (pilihan) {
+            case 1:
+                cout << "Data yang ingin disisipkan: ";
+                cin >> data;
+                insertNode(head, tail, data);
+                break;
+            case 2:
+                cout << "Data yang ditampilkan: ";
+                tampilkan(head);
+                break;
+            case 3:
+                cout << "Data yang ingin dicari: ";
+                cin >> data;
+                cari(head, data);
+                break;
+            case 4:
+                cout << "Data yang ingin dihapus: ";
+                cin >> data;
+                deleteNode(head, tail, data);
+                break;
+            case 5:
+                cout << "Keluar dari program\n";
+                break;
+            default:
+                cout << "Pilihan anda tidak tersedia, coba pilihan lain.\n";
+        }
+    } while (pilihan != 5);
+
+    // Menghapus seluruh simpul dalam linked list
+    hapus(head);
+
+    return 0; // Mengindikasikan program berakhir dengan sukses
+}

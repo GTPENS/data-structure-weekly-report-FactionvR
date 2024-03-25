@@ -1,0 +1,150 @@
+/*
+                                PRAKTIKUM 03 : DOUBLE LINKED LIST
+
+NAMA : RANGGA RAISHA SYAPUTRA
+NRP : 5223600007
+KELAS : GT11-A
+
+                LATIHAN
+
+1. Bangunlah double linked list di atas adalah double linked list dengan prinsip LIFO.
+2. Bangunlah sebuah single linked list dentan prinsip FIFO(First In First Out)
+
+*/
+
+#include <iostream>
+using namespace std;
+
+// Definisikan struktur Node untuk merepresentasikan simpul dalam linked list
+struct Node{
+    int data;       // Menyimpan data
+    Node* sebelum;  // Pointer ke simpul sebelumnya
+    Node* setelah;  // Pointer ke simpul selanjutnya
+};
+
+// Fungsi untuk menyisipkan simpul baru sebagai simpul ujung (awal) dari linked list
+void masukNode(Node*& head, Node*& tail, int data){
+    // Buat simpul baru
+    Node* n = new Node();
+    n->data = data;
+
+    // Jika linked list masih kosong
+    if(head == nullptr){
+        n->setelah = nullptr;
+        n->sebelum = nullptr;
+        head = n;
+        tail = n;
+    }
+    // Jika linked list tidak kosong
+    else{
+        n->setelah = head;
+        head->sebelum = n;
+        head = n;
+    }
+}
+
+// Fungsi untuk menampilkan isi linked list dengan urutan Last In First Out (LIFO)
+void tampilkan(Node* head){
+    Node* temp = head; 
+    cout << "Tampilan data hasil LIFO  : ";
+    while (temp != NULL) {
+        cout << temp->data << " ";
+        temp = temp->setelah;
+    }
+    cout << endl;
+}
+
+// Fungsi untuk menampilkan isi linked list dengan urutan First In First Out (FIFO)
+void fIFO(Node* tail){
+    Node* temp = tail;
+    cout << "Tampilan data hasil FIFO  : ";
+    while (temp != NULL) {
+        cout << temp->data << " ";
+        temp = temp->sebelum;
+    }
+    cout << endl;
+}
+
+// Fungsi untuk mencari simpul dengan nilai tertentu dalam linked list
+void carikan(Node* head, int data){
+    Node* temp = head;
+    int n = 1;
+    // Jika linked list kosong
+    if(head == nullptr){
+        cout << "Data list belum anda buat" << endl;
+    }
+    // Jika linked list tidak kosong
+    else{
+        // Melakukan iterasi untuk mencari simpul dengan nilai yang dicari
+        while(temp->data != data){
+            // Jika sampai akhir linked list dan data tidak ditemukan
+            if(temp->setelah == nullptr){
+                cout << "data " << data << " tidak tersedia" << endl;
+                break;
+            }
+            // Jika belum sampai akhir linked list, lanjutkan pencarian
+            else{
+                temp = temp->setelah;
+            }
+            n++;
+        }
+    }
+    // Jika data ditemukan, tampilkan posisi simpulnya
+    if(temp->data == data) 
+        cout << "data " << data << " ditemukan di node ke-" << n << endl;
+}
+
+// Fungsi untuk menghapus simpul dengan nilai tertentu dari linked list
+void hapusNode(Node*& head, Node*& tail, int data){
+    Node* temp = head;
+    // Melakukan iterasi untuk mencari simpul dengan nilai yang akan dihapus
+    while(temp->data != data){
+        temp = temp->setelah;
+    }
+    // Jika simpul yang akan dihapus adalah head
+    if(temp == head){
+        head = head->setelah;
+    }
+    // Jika simpul yang akan dihapus adalah tail
+    else if(temp == tail){
+        tail = tail->sebelum;
+    }
+    // Jika simpul yang akan dihapus berada di tengah-tengah
+    else{
+        temp->sebelum->setelah = temp->setelah;
+        temp->setelah->sebelum = temp->sebelum;
+    }
+    delete temp; // Hapus simpul
+}
+
+// Fungsi untuk menghapus seluruh simpul dalam linked list
+void hapus(Node*& head) {
+    // Melakukan iterasi dari head hingga mencapai nullptr, dan menghapus setiap simpul satu per satu
+    while (head != nullptr) {
+        Node* temp = head;
+        head = head->setelah;
+        delete temp;
+    }
+}
+
+int main(){
+    Node* head = nullptr;  // Pointer ke simpul pertama (head)
+    Node* tail = nullptr;  // Pointer ke simpul terakhir (tail)
+
+    // Menambahkan beberapa simpul ke linked list
+    masukNode(head, tail, 15);
+    masukNode(head, tail, 25);
+    masukNode(head, tail, 35);
+    masukNode(head, tail, 45);
+    masukNode(head, tail, 55);
+    masukNode(head, tail, 65);
+    
+    // Menampilkan isi linked list dengan urutan LIFO dan FIFO
+    tampilkan(head);
+    fIFO(tail);
+
+    // Menghapus seluruh simpul dalam linked list
+    hapus(head);
+
+    return 0; // Mengindikasikan program berakhir dengan sukses
+}
