@@ -5,6 +5,9 @@ NAMA : RANGGA RAISHA SYAPUTRA
 NRP  : 5223600007
 
                         DEQUEUE PADA QUEUE LINKED LIST
+
+Kode program memuat implementasi metode `dequeue` untuk menghapus elemen dari awal Queue pada Linked List.
+
 */  
 
 int Queue::dequeue() {
