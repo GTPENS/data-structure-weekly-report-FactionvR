@@ -1,7 +1,7 @@
 ### Nama : Rangga Raisha Syaputra
 ### NRP : 5223600007
 ### Kelas : 11 GT-A
-# Praktikum 07 : Quick Sort, Merge Sort
+# Praktikum 08 : Quick Sort, Merge Sort
 
 ## Percobaan
 
