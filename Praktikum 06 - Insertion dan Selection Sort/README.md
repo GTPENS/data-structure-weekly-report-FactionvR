@@ -7,7 +7,7 @@
 
 Percobaan - 01
 
-```sh
+```cpp
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
@@ -50,7 +50,7 @@ int main() {
 
 Percobaan - 02
 
-```sh
+```cpp
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
@@ -99,7 +99,7 @@ int main() {
 
 Percobaan - 03
 
-```sh
+```cpp
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
@@ -148,7 +148,7 @@ int main() {
 
 Latihan - 01
 
-```sh
+```cpp
 #include <iostream>
 #include <vector>
 
@@ -237,7 +237,7 @@ int main() {
 
 Latihan - 02
 
-```sh
+```cpp
 #include <iostream>
 #include <vector>
 
@@ -344,7 +344,7 @@ int main() {
 
 Latihan - 03
 
-```sh
+```cpp
 #include <iostream>
 #include <string>
 #include <vector>
